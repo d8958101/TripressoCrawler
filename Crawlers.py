@@ -1,7 +1,7 @@
 class GloriaCrawler():
     def __init__(self):
         print('init done.')
-    def GO(self):
+    def Go(self):
                 
         # 引入 requests 模組
         import requests
@@ -23,4 +23,3 @@ class GloriaCrawler():
         for m in pattern.finditer(html):
             print(m.group('TourName'))  
             print(m.group('Days'))  
-            
