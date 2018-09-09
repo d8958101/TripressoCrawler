@@ -21,5 +21,9 @@ class GloriaCrawler():
         # DOTALL：就是csharp裡面的singleline
         pattern = re.compile(pattern, re.DOTALL)
         for m in pattern.finditer(html):
-            print(m.group('TourName'))  
-            print(m.group('Days'))  
+            print("TourName:" + m.group('TourName'))  
+            print("Days:" +m.group('Days'))  
+            print("Date:" +m.group('Date'))  
+            print("Money:" +m.group('Money'))  
+            print("Total:" +m.group('Total'))  
+            print("Available:" +m.group('Available'))  
