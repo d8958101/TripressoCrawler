@@ -44,16 +44,37 @@ class GloriaCrawler():
         post_response = requests.post(url='https://www.gloriatour.com.tw/EW/Services/SearchListData.asp', data=post_data)
         html = post_response.text
         #剖析出html中的JSON               
-        pattern = r'.*?''(?P<value>\{.*?\})''.*?'
+        # pattern = r'.*?''(?P<value>\{.*?\})''.*?'
+        pattern = r'.*?''(?P<value>\{.*?"ErrMsg":.*?\})''.*?'
         # DOTALL：就是csharp裡面的singleline
         pattern = re.compile(pattern, re.DOTALL)        
         match = pattern.match(html)        
         if match:
             # 得到匹配結果
-            print(match.group('value'))
-
-        
-        
+            # print(match.group('value'))
+            import json
+            jsonString = match.group('value')            
+            jsonObj = json.loads(jsonString)
+            allToursJSONArray  = jsonObj['All']
+            # print(allToursJSON)
+            # allToursJSONArray = json.load(allToursJSONString)
+            for item in allToursJSONArray:
+                print('-------------------------------')
+                #TourName                
+                print("GrupSnm:" + item['GrupSnm'])
+                #Date
+                print("LeavDt:" + item['LeavDt'])
+                #Available
+                print("SaleYqt:" + str(item['SaleYqt']))
+                #Total
+                print("EstmTotqt:" + str(item['EstmTotqt']))
+                #Monty
+                print("SaleAm:" + str(item['SaleAm']))
+                #Days
+                print("天數GrupLn:" + str(item['GrupLn']))
+                #url
+                print("ShareUrl:" + item['ShareUrl'])
+                print('-------------------------------')
 
 
 
