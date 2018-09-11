@@ -16,12 +16,15 @@ class GloriaCrawler():
             exit()
         html = resp.text
         #https://regex101.com/r/XHuNJH/1
-        pattern = r'<div class=\"product_name\">.*?<span class=\"product_num\">[\d\w]+</span>\s*\r\n\s*(?P<TourName>.*?)\s*\r\n\s*<div class=\"product_tag\">.*?<div class=\"product_days\">(?P<Days>\d+)天.*?<div class=\"product_date normal\">(?P<Date>\d{4}/\d{2}/\d{2}).*?售價\$<strong>(?P<Money>[0-9,]+)</strong>.*?機位<\/span><span class=\"number\">(?P<Total>\d+)</span>.*?可售<\/span><span class=\"number\">(?P<Available>\d+)</span><\/div>'
+        #pattern = r'<div class=\"product_name\">.*?<span class=\"product_num\">[\d\w]+</span>\s*\r\n\s*(?P<TourName>.*?)\s*\r\n\s*<div class=\"product_tag\">.*?<div class=\"product_days\">(?P<Days>\d+)天.*?<div class=\"product_date normal\">(?P<Date>\d{4}/\d{2}/\d{2}).*?售價\$<strong>(?P<Money>[0-9,]+)</strong>.*?機位<\/span><span class=\"number\">(?P<Total>\d+)</span>.*?可售<\/span><span class=\"number\">(?P<Available>\d+)</span><\/div>'
+        pattern = r'<div class=\"product_name\">.*?<span class=\"product_num\">(?P<ProductNum>[\d\w]+)</span>\s*\r\n\s*(?P<TourName>.*?)\s*\r\n\s*<div class=\"product_tag\">.*?<div class=\"product_days\">(?P<Days>\d+)天.*?<div class=\"product_date normal\">(?P<Date>\d{4}/\d{2}/\d{2}).*?售價\$<strong>(?P<Money>[0-9,]+)</strong>.*?機位</span><span class=\"number\">(?P<Total>\d+)</span>.*?可售</span><span class=\"number\">(?P<Available>\d+)</span></div>'
 
         import re
         # DOTALL：就是csharp裡面的singleline
         pattern = re.compile(pattern, re.DOTALL)
         for m in pattern.finditer(html):
+            
+            print("ProductNum:" + m.group('ProductNum'))  
             print("TourName:" + m.group('TourName'))  
             print("Days:" +m.group('Days'))  
             print("Date:" +m.group('Date'))  
@@ -59,7 +62,9 @@ class GloriaCrawler():
             # print(allToursJSON)
             # allToursJSONArray = json.load(allToursJSONString)
             for item in allToursJSONArray:
-                print('-------------------------------')
+                print('-------------------------------')                
+                #ProductNum                
+                print("GrupCd:" + item['GrupCd'])
                 #TourName                
                 print("GrupSnm:" + item['GrupSnm'])
                 #Date
