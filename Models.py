@@ -4,9 +4,14 @@ def ExecSQLInsert(sql,values):
     conn = sqlite3.connect('test.db')
     print('Database connection openned!')
     cur = conn.cursor()
-    cur.execute(sql,values)  
-    conn.commit()
-    print('SQL Committed:' + sql)
+    try:
+        cur.execute(sql,values)  
+        conn.commit()
+        print('SQL Committed:' + sql)
+    except:
+        conn.rollback()
+        print('SQL rollbacked::' + sql)
+    
     conn.close()
     print('Database connection closed!')
 
@@ -21,35 +26,17 @@ class BulkInsert():
 
     def execAndCommit(self):        
         conn = sqlite3.connect('test.db')
-        print('Database connection openned!')        
-        conn.executemany(self.__sql, self.__valuesList)    
-        print('SQL Committed:' + self.__sql)
-        conn.commit()
+        print('Database connection openned!') 
+        try:       
+            conn.executemany(self.__sql, self.__valuesList)                
+            conn.commit()
+            print('SQL Committed:' + self.__sql)
+        except:
+            conn.rollback()
+            print('SQL rollbacked::' + self.__sql)
         conn.close()
         print('Database connection closed!')    
 
-class BulkInsertExecutor():
-    def __init__(self):
-        # self.__sql = ''
-        # self.__valuesList = []
-        pass
-    # def AddStatements(sql, values):        
-    #     self.__sql = sql
-    #     self.__valuesList.append(values)
-
-    # def SetSQL(sql):
-    #     if self.sql <> '':
-    #         self.__sql = sql.replace('?','%s')        
-
-    def execAndCommit(self,sql,valueList):        
-        conn = sqlite3.connect('test.db')
-        print('Database connection openned!')
-        #sql = sql.replace('?','%s')  
-        conn.executemany(sql, valueList)    
-        print('SQL Committed:' + sql)
-        conn.commit()
-        conn.close()
-        print('Database connection closed!')    
 
 
 class TourInfo():
@@ -76,8 +63,3 @@ class TourInfo():
     def insertDb(self):
         ExecSQLInsert(self.sql, self.values)
 
-        
-# class SQLObj():
-#     def __init__(self, sql, values):
-#         self.sql = sql
-#         self.values = values
