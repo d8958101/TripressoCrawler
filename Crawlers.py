@@ -68,12 +68,16 @@ class GloriaCrawler():
             jsonString = match.group('value')            
             jsonObj = json.loads(jsonString)
             allToursJSONArray  = jsonObj['All']
-            # print(allToursJSON)
-            # allToursJSONArray = json.load(allToursJSONString)
-            from Models import BulkInsertExecutor
-            bulkInsert = BulkInsertExecutor()
-            sql = ''
-            valueList = []
+   
+
+
+            # from Models import BulkInsertExecutor
+            # bulkInsert = BulkInsertExecutor()
+            # sql = ''
+            # valueList = []
+
+            from Models import BulkInsert
+            bulkInsert = BulkInsert()
             for item in allToursJSONArray:
                 print('-------------------------------')                
                 #ProductNum                
@@ -93,19 +97,23 @@ class GloriaCrawler():
                 #url
                 print("ShareUrl:" + item['ShareUrl'])
                 print('-------------------------------')
+                # from Models import TourInfo
+                # tourInfo = TourInfo('Gloria', item['GrupCd'], item['GrupSnm'],\
+                # item['LeavDt'], item['GrupLn'], item['SaleYqt'], item['EstmTotqt'], \
+                # item['SaleAm'])
+                # sql = tourInfo.sql
+                # valueList.append(('Gloria',item['GrupCd'], item['GrupSnm'],\
+                # item['LeavDt'], item['GrupLn'], item['SaleYqt'], item['EstmTotqt'], \
+                # item['SaleAm']))
                 from Models import TourInfo
                 tourInfo = TourInfo('Gloria', item['GrupCd'], item['GrupSnm'],\
                 item['LeavDt'], item['GrupLn'], item['SaleYqt'], item['EstmTotqt'], \
                 item['SaleAm'])
-                sql = tourInfo.sql
-                valueList.append(('Gloria',item['GrupCd'], item['GrupSnm'],\
-                item['LeavDt'], item['GrupLn'], item['SaleYqt'], item['EstmTotqt'], \
-                item['SaleAm']))
-                # valueList.append(['Gloria',item['GrupCd'], item['GrupSnm'],\
-                # item['LeavDt'], item['GrupLn'], item['SaleYqt'], item['EstmTotqt'], \
-                # item['SaleAm']])
+                bulkInsert.AddStatements(tourInfo.sql, tourInfo.values)
 
-            bulkInsert.execAndCommit(sql,valueList)   
+
+            #bulkInsert.execAndCommit(sql,valueList)   
+            bulkInsert.execAndCommit()
 
 
 

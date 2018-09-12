@@ -10,6 +10,24 @@ def ExecSQLInsert(sql,values):
     conn.close()
     print('Database connection closed!')
 
+class BulkInsert():
+    def __init__(self):
+        self.__sql = ''
+        self.__valuesList = []
+
+    def AddStatements(self, sql, values):        
+        self.__sql = sql
+        self.__valuesList.append(values)
+
+    def execAndCommit(self):        
+        conn = sqlite3.connect('test.db')
+        print('Database connection openned!')        
+        conn.executemany(self.__sql, self.__valuesList)    
+        print('SQL Committed:' + self.__sql)
+        conn.commit()
+        conn.close()
+        print('Database connection closed!')    
+
 class BulkInsertExecutor():
     def __init__(self):
         # self.__sql = ''
@@ -50,7 +68,7 @@ class TourInfo():
         self.values =(travelAgent, tourId , tourName, leaveDate, days, unfilledPlaces,\
          totalPlaces, fee)
                 
-    def deletedOldData(trueOrFalse):
+    def deletedOldData(self, trueOrFalse):
         #是否刪除舊資料
         if trueOrFalse == False:
             self.sql = self.sql.replace('insert or replace','insert')    
