@@ -34,8 +34,10 @@ class TourInfo():
         days, unfilled_places, total_places, fee) values (?, ?, ?, ?, ?, ?, ?, ?)'''
         self.__values =(travelAgent, tourId , tourName, leaveDate, days, unfilledPlaces,\
          totalPlaces, fee)
+        self.deleteOldData = False
         
     def insertDb(self):
+        
         ExecSQLInsert(self.__sql, self.__values)
 
         

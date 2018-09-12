@@ -4,11 +4,8 @@ import threading
 import time
 
 objG = GloriaCrawler()
-# 建立一個子執行緒
+# 建立一個子執行緒並立刻執行
 t = threading.Thread(target = objG.Go())
-
-# 執行該子執行緒
-t.start()
 
 # 主執行緒繼續執行自己的工作
 for i in range(10000):

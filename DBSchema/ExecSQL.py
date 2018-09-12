@@ -4,7 +4,7 @@ print('Database connection openned!')
 cur = conn.cursor()
 
 sql = ''
-# sql = 'delete  from TourInfo '
+sql = 'delete  from TourInfo '
 # sql = 'drop table TourInfo'
 # sql='''insert into TourInfo (travel_agent, tour_id, tour_name, leave_date, 
 # days, unfilled_places, total_places, fee) values (?, ?, ?, ?, ?, ?, ?, ?)'''
