@@ -1,10 +1,14 @@
+#D:\Projects\PythonWorkspace\TripressoCrawler\DBSchema\ExecSQL.py
+#執行測試用的指令
+
 import sqlite3
 conn = sqlite3.connect('test.db')
 print('Database connection openned!')
 cur = conn.cursor()
 
+
 sql = ''
-sql = 'delete  from TourInfo '
+# sql = 'delete  from TourInfo '
 # sql = 'drop table TourInfo'
 # sql='''insert into TourInfo (travel_agent, tour_id, tour_name, leave_date, 
 # days, unfilled_places, total_places, fee) values (?, ?, ?, ?, ?, ?, ?, ?)'''

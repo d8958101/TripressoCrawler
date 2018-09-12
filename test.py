@@ -1,3 +1,6 @@
+#D:\Projects\PythonWorkspace\TripressoCrawler\test.py
+#測試任何的情況
+
 import sqlite3
 conn = sqlite3.connect('test.db')
 print('Database connection openned!')
